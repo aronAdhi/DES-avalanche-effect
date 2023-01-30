@@ -323,17 +323,17 @@ def DES(pt,key):
 
 #texts = ["0123456789ABCDEF", "ABCDEF0123456789", "1234ABCD5678EF90", "1A2B3C4D5E6F7890", "A0B1C2D3E4F56789"]
 #1bit_change
-texts = ["0123456789ABCDEF", "1123456789ABCDEF", "2123456789ABCDEF", "4123456789ABCDEF", "8123456789ABCDEF"]
+#texts = ["0123456789ABCDEF", "1123456789ABCDEF", "2123456789ABCDEF", "4123456789ABCDEF", "8123456789ABCDEF"]
 #2bit_change
 #texts = ["0123456789ABCDEF", "3123456789ABCDEF", "C123456789ABCDEF", "A123456789ABCDEF", "9123456789ABCDEF"]
 #3bit_change
 #texts = ["0123456789ABCDEF", "E123456789ABCDEF", "D123456789ABCDEF", "B123456789ABCDEF", "7123456789ABCDEF"]
 #4bit change
-# texts = ["0123456789ABCDEF", "3723456789ABCDEF", "6D23456789ABCDEF", "C823456789ABCDEF", "5423456789ABCDEF"]
+#texts = ["0123456789ABCDEF", "3723456789ABCDEF", "6D23456789ABCDEF", "C823456789ABCDEF", "5423456789ABCDEF"]
 #5bit change
-#texts = ["0123456789ABCDEF", "E723456789ABCDEF", "DD23456789ABCDEF", "B823456789ABCDEF", "7423456789ABCDEF"]
+texts = ["0123456789ABCDEF", "E723456789ABCDEF", "DD23456789ABCDEF", "B823456789ABCDEF", "7423456789ABCDEF"]
 #1 bit change
-keys = ["013898371520F75E", "113898371520F75E", "213898371520F75E", "413898371520F75E", "813898371520F75E"]
+#keys = ["013898371520F75E", "113898371520F75E", "213898371520F75E", "413898371520F75E", "813898371520F75E"]
 #2 bit change
 #keys = ["013898371520F75E", "313898371520F75E", "C13898371520F75E", "A13898371520F75E", "913898371520F75E"]
 #3 bit change
@@ -341,35 +341,35 @@ keys = ["013898371520F75E", "113898371520F75E", "213898371520F75E", "41389837152
 # 4 bit change
 #keys = ["013898371520F75E", "373898371520F75E", "6D3898371520F75E", "C83898371520F75E", "543898371520F75E"]
 #5 bit change
-#keys = ["013898371520F75E", "E73898371520F75E", "DD3898371520F75E", "B83898371520F75E", "743898371520F75E"]
+keys = ["013898371520F75E", "E73898371520F75E", "DD3898371520F75E", "B83898371520F75E", "743898371520F75E"]
 
 mat = []
-title = "Avalanche effect\n Change in plain text(1 bit)"
+title = "Avalanche effect\n Change in key(5 bit)"
 
 # data manipulation
 
-#for text manipulation
-for text in texts:
-	mat.append(DES(text, keys[0]))
-	intermediate = []
-print(mat)
-
-# #for key manipulation
-# for key in keys:
-# 	mat.append(DES(texts[0], key))
+# #for text manipulation
+# for text in texts:
+# 	mat.append(DES(text, keys[0]))
 # 	intermediate = []
 # print(mat)
+
+#for key manipulation
+for key in keys:
+	mat.append(DES(texts[0], key))
+	intermediate = []
+print(mat)
 
 
 result = []
 for i in range(1,5):
 	t =[]
-	for j in range(0,16):
+	for j in range(0,17):
 		t.append(hamming(hex2bin(mat[0][j]), hex2bin(mat[i][j]) ))
 	result.append(t)
 	
 tr = []
-for i in range(0,16):
+for i in range(0,17):
 	t = []
 	for j in range(0,4):
 		t.append(result[j][i])
@@ -385,6 +385,7 @@ plt.xlabel('Round number')
 
 for line in bp['medians']:
     x, y = line.get_xydata()[1]
+    ax.set_xticks(range(2, len(tr)+1))
     # ax.axvline(x, color='red')
     ax.text(x, y, '{:.1f}'.format(y), ha='center', va='bottom')
 
